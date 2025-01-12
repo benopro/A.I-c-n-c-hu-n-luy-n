@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat with Feedback</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .chat-box { max-width: 600px; margin: 0 auto; }
+        .chat-history { margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9; }
+        .chat-history div { margin-bottom: 10px; }
+        .chat-history .question { font-weight: bold; }
+        form { display: flex; gap: 10px; }
+        form input[type="text"] { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+        form button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="chat-box">
+        <h1>AI Chat</h1>
+        <form method="POST">
+            <input type="text" name="question" placeholder="Nhập câu hỏi của bạn">
+            <button type="submit">Gửi</button>
+        </form>
+        {% if response %}
+        <p>AI: {{ response }}</p>
+        <form method="POST">
+            <button name="feedback" value="positive">👍 Tốt</button>
+            <button name="feedback" value="negative">👎 Không tốt</button>
+        </form>
+        {% endif %}
+        <h2>Lịch sử hội thoại:</h2>
+        <div class="chat-history">
+            {% for convo in history %}
+            <div><strong>Q:</strong> {{ convo.prompt }}</div>
+            <div><strong>A:</strong> {{ convo.response }}</div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
+
